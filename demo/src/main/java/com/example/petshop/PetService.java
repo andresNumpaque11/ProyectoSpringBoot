@@ -15,18 +15,22 @@ public class PetService {
     public PetService(PetRepository pRepository) {
         this.petRepository = pRepository;
     }
-    
+
     public List<Pet> getPets() {
         List<Pet> pets = petRepository.findAll();
         return pets;
     }
 
     public void newPet(Pet pet) {
-        Optional<Pet> res = petRepository.findProductById(pet.getId());
+        Optional<Pet> res = petRepository.findPetById(pet.getId());
         if (res.isPresent()) {
             throw new IllegalStateException("Ya existe la mascota con ese id");
 
         }
         petRepository.save(pet);
+    }
+
+    public Optional<Pet> getPetById(int id) {
+        return petRepository.findPetById(id);
     }
 }
